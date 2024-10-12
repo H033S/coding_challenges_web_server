@@ -57,25 +57,21 @@ func New(requestLines []string) (*Request, error) {
 
 func getMethodBasedOnText(rMethod string) RMethod {
 
-	switch rMethod {
-	case "GET":
-		return GET
-	case "HEAD":
-		return HEAD
-	case "POST":
-		return POST
-	case "PUT":
-		return PUT
-	case "DELETE":
-		return DELETE
-	case "TRACE":
-		return TRACE
-	case "CONNECT":
-		return CONNECT
-	default:
-		return INVALID
-
-	}
+	methods := map[string]RMethod{
+		"GET":     GET,
+		"HEAD":    HEAD,
+		"POST":    POST,
+		"PUT":     PUT,
+		"DELETE":  DELETE,
+		"TRACE":   TRACE,
+		"CONNECT": CONNECT,
+    }
+    
+    value, ok := methods[rMethod]
+    if ok {
+        return value
+    } 
+    return INVALID
 }
 
 func getPathBaseOnText(rPath string) string {

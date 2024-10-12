@@ -26,20 +26,6 @@ func main() {
 			os.Exit(0)
 		}
 
-		rq, err := internal.HandleRequest(&conn)
-
-		if err != nil {
-			fmt.Println("Something went wrong while creating request")
-			os.Exit(0)
-		}
-
-		content, err := os.ReadFile((*rq).ResourcePath)
-		response := fmt.Sprintf("HTTP/1.1 200 OK\r\n\r\n%s\r\n", content)
-		responseInBytes := []byte(response)
-
-        fmt.Println(content)
-
-		conn.Write(responseInBytes)
-		conn.Close()
+		go internal.HandleRequest(&conn)
 	}
 }
